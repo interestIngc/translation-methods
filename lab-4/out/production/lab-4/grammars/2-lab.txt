@@ -1,0 +1,39 @@
+expr: xor exprPrime;
+
+exprPrime
+    :
+    | OR xor exprPrime
+    ;
+
+xor: and xorPrime;
+
+xorPrime
+    :
+    | XOR and xorPrime
+    ;
+
+and: factor andPrime;
+
+andPrime
+    :
+    | AND factor andPrime
+    ;
+
+factor
+    : item
+    | NOT item
+    ;
+
+item
+    : VARIABLE
+    | OPENPAREN expr CLOSEPAREN
+    ;
+
+OPENPAREN: '(';
+CLOSEPAREN: ')';
+OR: '|';
+AND: '&';
+XOR: '^';
+NOT: '!';
+VARIABLE: [x-z];
+SPACES: [ \t\n] -> skip;

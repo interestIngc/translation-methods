@@ -1,0 +1,24 @@
+string function(int I0000,  int I000O)  {
+    I0000 = I0000 + 1;
+    int I00O0 = 0;
+	I000O = I000O + I0000 * 2;
+    return I0000 + I000O;
+}
+
+int main() {
+    int I0000, I000O;
+    int I00OO = 0;
+	scanf("%d%d", &I0000, &I000O);
+    if (I0000 > 0) {
+        printf("%d\n", I0000 + I000O);
+        int I0O00 = 0;
+	    print(I0000 > I000O);
+        print(I000O >= I0000);
+        I0O00 = I0O00 + 2;
+	} else {
+        printf("%d\n", I0000 - I000O);
+    int I0O0O = 0;
+	}
+    I00OO = I00OO + 2;
+	return 0;
+}

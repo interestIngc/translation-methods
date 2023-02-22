@@ -1,0 +1,50 @@
+expr returns [double val]
+    : term exprP[res.getChild(0).val] {res.val = res.getChild(1).val};
+
+exprP[double acc] returns [double val]
+    :                                       {res.val = acc}
+    | ADD term exprP[acc + res.getChild(1).val] {res.val = res.getChild(2).val}
+    | SUB term exprP[acc - res.getChild(1).val] {res.val = res.getChild(2).val}
+    ;
+
+term returns [double val]:
+    factorLog termP[res.getChild(0).val]           {res.val = res.getChild(1).val}
+    ;
+
+termP[double acc] returns [double val]
+    :                                       {res.val = acc}
+    | MUL factorLog termP[acc * res.getChild(1).val] {res.val = res.getChild(2).val}
+    | DIV factorLog termP[acc / res.getChild(1).val] {res.val = res.getChild(2).val}
+    ;
+
+factorLog returns [double val]
+    : factor factorLogP[res.getChild(0).val] {res.val = res.getChild(1).val}
+    ;
+
+factorLogP[double acc] returns [double val]
+    :                                       {res.val = acc}
+    | LOG factor factorLogP[res.getChild(1).val] {res.val = Math.log(acc) / Math.log(res.getChild(2).val)}
+    ;
+
+factor returns [double val]
+    :
+    OPENPAREN expr CLOSEPAREN {res.val = res.getChild(1).val}
+    | number {res.val = res.getChild(0).val}
+    ;
+
+number returns [double val]
+    :
+    NUM         {res.val = Double.parseDouble(res.getChild(0).getText())}
+    | SUB NUM {res.val = -Double.parseDouble(res.getChild(1).getText())}
+    ;
+
+
+ADD: '+';
+MUL: '*';
+SUB: '-';
+LOG: '//';
+DIV: '/';
+OPENPAREN: '(';
+CLOSEPAREN: ')';
+NUM: [0-9|-]+;
+SPACES: [ \t\n] -> skip;
